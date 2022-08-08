@@ -68,7 +68,7 @@ export const createDialog = (userId: number, secondId: number) => async (dispatc
         const response = await DialogService.CreateDialog(userId, secondId);
         dispatch(SetShowFoundUsers(false))
         if (response.data) {
-            dispatch(SetUsers(response.data))
+            dispatch(SetDialogs(response.data))
         }
         dispatch(SetDialogLoading(false))
     } catch (e) {

@@ -57,20 +57,20 @@ const ChatMessages: FC<ChatMessagesProps> = ({dialogId, user}) => {
                     </div>
                 ))}
             </div>
-            <div ref={refContainer} className="absolute left-1/2 translate-x-[-50%] bottom-5">
-                <input
-                    value={text}
-                    className="w-[600px] max-w-3xl bg-slate-200 px-3 py-4 rounded-md focus:ring ring-indigo-500 focus:outline-none transition ease-in-out shadow"
-                    onChange={handleChange}
-                    onKeyUp={handleKeyDown}
-                    placeholder='Введите сообщение'
-                />
-                <button
-                    onClick={handleOnClick}
-                    className="absolute top-1/2 translate-y-[-50%] right-2 w-10 h-10 rounded-full flex items-center justify-center bg-indigo-500 hover:bg-indigo-600"
-                    type='submit'>
-                    <BiSend className="text-lg" color="FFF"/>
-                </button>
+            <div ref={refContainer} className="max-w-[600px] w-full absolute  left-1/2 translate-x-[-50%] bottom-5">
+                    <input
+                        value={text}
+                        className=" w-full bg-slate-200 px-3 py-4 rounded-md focus:ring ring-indigo-500 focus:outline-none transition ease-in-out shadow"
+                        onChange={handleChange}
+                        onKeyUp={handleKeyDown}
+                        placeholder='Введите сообщение'
+                    />
+                    <button
+                        onClick={handleOnClick}
+                        className="absolute top-1/2 translate-y-[-50%] right-2 w-10 h-10 rounded-full flex items-center justify-center bg-indigo-500 hover:bg-indigo-600"
+                        type='submit'>
+                        <BiSend className="text-lg" color="FFF"/>
+                    </button>
             </div>
         </div>
     );
