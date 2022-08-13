@@ -1,28 +1,27 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import Login from "../../components/UI/GoogleButton/Login";
 import {useDispatch} from "react-redux";
-import {AuthLogin} from "../../store/reducers/authReducer/action";
+import {AuthLogin, SetAuthLoading} from "../../store/reducers/authReducer/action";
 import {gapi} from "gapi-script";
 import {googleSetting} from "../../helpers/googleSetting";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 interface AuthProps {
+    isLoading: boolean
     handleAuth: (token: string) => void,
+    handleSetAuthLoading: (payload: boolean) => void
 }
 
 
-const Auth: FC<AuthProps> = ({handleAuth}) => {
-    const [isLoading, setIsLoading] = useState(false);
+const Auth: FC<AuthProps> = ({handleAuth, isLoading, handleSetAuthLoading}) => {
     useEffect(() => {
         gapi.load('client:auth2', () => {
             gapi.client.init({
                 client_id: googleSetting.clientId,
                 scope: "email"
-            }).then(() => {
-                setIsLoading(false)
             })
         })
     }, [])
-
 
     return (
         <>
@@ -39,7 +38,7 @@ const Auth: FC<AuthProps> = ({handleAuth}) => {
             <div className="w-screen h-screen flex justify-center items-center bg-slate-200">
                 <form className="bg-white w-full max-w-md shadow rounded-md px-8 pt-6 pb-8">
                     <div className="text-2xl mb-8">Вход в аккаунт</div>
-                    <Login handleAuth={handleAuth}/>
+                    <Login handleSetAuthLoading={handleSetAuthLoading} handleAuth={handleAuth}/>
                 </form>
             </div>
         </>
@@ -48,9 +47,11 @@ const Auth: FC<AuthProps> = ({handleAuth}) => {
 
 const ContainerAuth = () => {
     const dispatch = useDispatch()
+    const isLoading = useTypedSelector((state) => state.auth.isAuthLoading)
     const handleAuth = useCallback((token: string) => dispatch(AuthLogin(token)), [])
+    const handleSetAuthLoading = useCallback((payload: boolean) => dispatch(SetAuthLoading(payload)), [])
     return (
-        <Auth handleAuth={handleAuth}/>
+        <Auth isLoading={isLoading} handleSetAuthLoading={handleSetAuthLoading} handleAuth={handleAuth}/>
     )
 }
 

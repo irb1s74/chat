@@ -6,9 +6,9 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: irb1s
-      POSTGRES_PASSWORD: 2205
-      POSTGRES_DB: db_chat
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
     ports:
       - 5432:5432
   adminer:
