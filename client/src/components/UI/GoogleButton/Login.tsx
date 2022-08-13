@@ -4,9 +4,10 @@ import {googleSetting} from "../../../helpers/googleSetting";
 
 interface LoginProps {
     handleAuth: (token: string) => void;
+    handleSetAuthLoading: (payload: boolean) => void
 }
 
-const Login: FC<LoginProps> = ({handleAuth}) => {
+const Login: FC<LoginProps> = ({handleAuth, handleSetAuthLoading}) => {
 
     const onSuccess = (res: (GoogleLoginResponse | GoogleLoginResponseOffline)) => {
         if ("tokenId" in res) {
@@ -15,6 +16,7 @@ const Login: FC<LoginProps> = ({handleAuth}) => {
     }
     const onFailure = (res: (GoogleLoginResponse | GoogleLoginResponseOffline)) => {
         console.log("Error:", res)
+        handleSetAuthLoading(false)
     }
     const {signIn} = useGoogleLogin({
         onSuccess,
@@ -23,7 +25,6 @@ const Login: FC<LoginProps> = ({handleAuth}) => {
         isSignedIn: true,
         cookiePolicy: "single_host_origin"
     });
-
 
     return (
         <button onClick={signIn} className='w-full text-white text-lg rounded-md bg-indigo-500 p-3'>

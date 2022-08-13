@@ -14,7 +14,6 @@ const App: FC<AppProps> = ({isAuth}) => {
     );
 };
 const ContainerApp = () => {
-
     const isAuth = useTypedSelector((store) => store.auth.isAuth)
     return (
         <App  isAuth={isAuth}/>
